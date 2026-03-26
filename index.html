@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bhai Test 😏</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial;
+      background: linear-gradient(to right, lightblue, lightgreen);
+      overflow: hidden;
+    }
+
+    h1 {
+      margin-top: 50px;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 18px;
+      margin: 15px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    #yesBtn {
+      background-color: green;
+      color: white;
+    }
+
+    #noBtn {
+      background-color: red;
+      color: white;
+      position: absolute;
+    }
+
+    #message {
+      font-size: 20px;
+      margin-top: 20px;
+    }
+
+    img {
+      width: 300px;
+      border-radius: 15px;
+      margin: 10px;
+    }
+
+    .glow {
+      color: black;
+      font-size: 30px;
+      animation: glowAnim 1.5s infinite alternate;
+    }
+
+    @keyframes glowAnim {
+      from { transform: scale(1); }
+      to { transform: scale(1.1); }
+    }
+  </style>
+</head>
+
+<body>
+
+<h1 class="glow">Aman ke liye ek test 😏</h1>
+<button onclick="startTest()">Start kar 😎</button>
+
+<script>
+  let step = 0;
+
+  function startTest() {
+    nextQuestion();
+  }
+
+  function nextQuestion() {
+    step++;
+
+    if (step === 1) {
+      document.body.innerHTML = `
+        <h1>Tu intelligent hai? 🤓</h1>
+        <button onclick="wrong()">Haan obviously 😎</button>
+        <button id="noBtn" onclick="right()">Nahi 😅</button>
+        <p id="message"></p>
+      `;
+    }
+
+    else if (step === 2) {
+      document.body.innerHTML = `
+        <h1>Tu mera best friend hai? 😤</h1>
+        <button onclick="right()">Haan bhai ❤️</button>
+        <button id="noBtn" onclick="wrong()">Nahi 😏</button>
+        <p id="message"></p>
+      `;
+    }
+
+    else if (step === 3) {
+      document.body.innerHTML = `
+        <h1>Party kaun dega? 🍕</h1>
+        <button onclick="partyYes()">Tu hi dega 😏</button>
+        <button id="noBtn" onclick="partyNo()">Main kabhi nahi 😂</button>
+        <p id="message"></p>
+      `;
+    }
+
+    else if (step === 4) {
+      document.body.innerHTML = `
+        <h1>GF ke baad bhi bhai ko yaad rakhega? 😡</h1>
+        <button onclick="right()">Haan bhai 🤝</button>
+        <button id="noBtn" onclick="wrong()">Nahi bhool jaunga 😏</button>
+        <p id="message"></p>
+      `;
+    }
+
+    else {
+      finalScreen();
+    }
+  }
+
+  function right() {
+    nextQuestion();
+  }
+
+  function wrong() {
+    moveButton();
+
+    let msgs = [
+      "Galat answer 😤",
+      "Soch le bhai 😏",
+      "Aise hi dosti tod dega kya 😡",
+      "Retry kar warna block 😂",
+      "Dimag laga thoda 🤦‍♂️"
+    ];
+
+    document.getElementById("message").innerText =
+      msgs[Math.floor(Math.random() * msgs.length)];
+  }
+
+  function partyYes() {
+    document.getElementById("message").innerText = "Sahi jawab 😎 chal aage badh";
+    setTimeout(() => {
+      nextQuestion();
+    }, 800);
+  }
+
+  function partyNo() {
+    moveButton();
+
+    let msgs = [
+      "Jhooth mat bol 😂",
+      "Party tu hi dega 😏",
+      "Bach ke nahi ja sakta 😤",
+      "Retry kar warna block 😡"
+    ];
+
+    document.getElementById("message").innerText =
+      msgs[Math.floor(Math.random() * msgs.length)];
+  }
+
+  function moveButton() {
+    let btn = document.getElementById("noBtn");
+    if (!btn) return;
+
+    let x = Math.random() * (window.innerWidth - 100);
+    let y = Math.random() * (window.innerHeight - 50);
+
+    btn.style.left = x + "px";
+    btn.style.top = y + "px";
+  }
+
+  function finalScreen() {
+    document.body.innerHTML = `
+      <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+      </audio>
+
+      <h1 class="glow">😂 Aman Bhai 😂</h1>
+      <p id="typing"></p>
+      <div id="photos"></div>
+    `;
+
+    let music = document.getElementById("bgMusic");
+    music.play();
+
+    typeText("Tu thoda pagal hai 🤪 par asli banda hai ❤️🤝");
+
+    let images = ["photo1.jpg", "photo2.jpg", "photo3.jpg"];
+    let i = 0;
+
+    setInterval(() => {
+      if (i < images.length) {
+        let img = document.createElement("img");
+        img.src = images[i];
+        document.getElementById("photos").appendChild(img);
+        i++;
+      }
+    }, 1500);
+  }
+
+  function typeText(text) {
+    let i = 0;
+    function typing() {
+      if (i < text.length) {
+        document.getElementById("typing").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typing, 50);
+      }
+    }
+    typing();
+  }
+</script>
+
+</body>
+</html>
